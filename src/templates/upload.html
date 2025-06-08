@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="/public/styles/upload.css" />
+{% endblock head %}
+
+{% block body %}
+    {% include "_navbar.html" %}
+    {% include "_notification.html" %}
+
+    <form id="form_meme_post" action="{{endpoint}}" method="post" enctype="multipart/form-data">
+        <div>
+          <label for="file">Meme:</label>
+          <input
+            type="file"
+            id="file"
+            name="file"
+            accept="image/*"
+            required
+          />
+        </div>
+      <p>El archivo no puedo ser mayor a 2MB.</p>
+      <button type="submit">SUBIR</button>
+    </form>
+
+    <script>
+        const form = document.getElementById("form_meme_post");
+        const notificationContainer = document.getElementById("notification-container");
+        const notification = document.getElementById("notification");
+
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            notificationContainer.style.display = "block";
+            notification.textContent = "Verificando si es un meme zurdo...";
+
+            const body = new FormData(form);
+
+             try {
+                const response = await fetch(form.action, {
+                    method: "POST",
+                    body,
+                });
+
+                if (!response.ok) {
+                    //redirect here depending error.status
+                    throw new Error("Error en el servidor");
+                }
+
+                notificationContainer.style.display = "none";
+                notification.style.textContent = "";
+                window.location.href = "/";
+            } catch {
+                window.location.href = "/error";
+            }
+        })
+    </script>
+{% endblock body %}
+
