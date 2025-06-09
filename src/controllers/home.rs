@@ -18,7 +18,7 @@ pub async fn handler(State(state): State<Arc<AppState>>) -> Result<Html<String>,
     let client = Client::new();
 
     let memes: Vec<Meme> = client
-        .get("http://localhost:3000/meme/get/all")
+        .get("http://localhost:3000/meme/get")
         .send()
         .await
         .map_err(|e| {

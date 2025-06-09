@@ -16,39 +16,56 @@
     {% endif %}
 
     <script>
-      async function loadMoreMemes(lastId) {
-      const notificationContainer = document.getElementById(
-        "notification-container",
-      );
-      const notification = document.getElementById("notification");
-      notificationContainer.style.display = "block";
-      notification.textContent = "Cargando...";
+        let canLoadMore = true;
 
-      try {
-        const response = await fetch(`http://localhost:3000/load_more/${lastId}`);
-        const html = await response.text();
-        document.body.insertAdjacentHTML("beforeend", html);
-        notificationContainer.style.display = "none";
-        notification.textContent = "";
-      } catch {
-        notification.textContent = "Something went wrong.";
-        setTimeout(() => {
-          notificationContainer.style.display = "none";
-          notification.textContent = "";
-        }, 3000);
-      }
-    }
+        async function loadMoreMemes(lastId) {
+          if (!canLoadMore) return;
 
-    function handleInfiniteScroll() {
-      const endOfPage =
-        window.innerHeight + window.scrollY >= document.body.offsetHeight;
-      if (endOfPage) {
-        const memes = document.querySelectorAll(".meme-container");
-        const lastMeme = memes[memes.length - 1];
-        const lastId = lastMeme?.querySelector("button")?.dataset.id;
-        if (lastId) loadMoreMemes(lastId);
-      }
-    }
-    window.addEventListener("scroll", handleInfiniteScroll);
+          const notificationContainer = document.getElementById(
+            "notification-container",
+          );
+          const notification = document.getElementById("notification");
+
+          notificationContainer.style.display = "block";
+          notification.textContent = "Cargando...";
+
+          try {
+            const response = await fetch(`http://localhost:3000/load_more/${lastId}`);
+            const html = await response.text();
+
+            if (!html.trim()) {
+              canLoadMore = false;
+              notification.textContent = "No hay memes.";
+              setTimeout(() => {
+                notificationContainer.style.display = "none";
+              }, 3000);
+              return;
+            }
+
+            document.body.insertAdjacentHTML("beforeend", html);
+
+            notificationContainer.style.display = "none";
+            notification.textContent = "";
+          } catch {
+            notification.textContent = "Something went wrong.";
+            setTimeout(() => {
+              notificationContainer.style.display = "none";
+              notification.textContent = "";
+            }, 3000);
+          }
+        }
+
+        function handleInfiniteScroll() {
+          const endOfPage =
+            window.innerHeight + window.scrollY >= document.body.offsetHeight;
+          if (endOfPage) {
+            const memes = document.querySelectorAll(".meme-container");
+            const lastMeme = memes[memes.length - 1];
+            const lastId = lastMeme?.querySelector("button")?.dataset.id;
+            if (lastId) loadMoreMemes(lastId);
+          }
+        }
+
+        window.addEventListener("scroll", handleInfiniteScroll);
     </script>
 {% endblock body %}
