@@ -8,12 +8,6 @@
 {% block body %}
     {% include "_navbar.html" %} 
     {% include "_notification.html" %} 
-
-    {% if meme %}
-        {% include "_meme.html" %}
-    {% else %}
-        <h1>404</h1>
-        <p>NO HAY MEME.</p>
-    {% endif %}
+    {% include "_meme.html" %}
 {% endblock body %}
 

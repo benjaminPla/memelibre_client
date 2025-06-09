@@ -2,7 +2,7 @@ use axum::{
     extract::{Path, State},
     response::{Html, Redirect},
 };
-use reqwest::Client;
+use reqwest::{Client, StatusCode};
 use serde::{Deserialize, Serialize};
 use std::sync::Arc;
 use tera::Context;
@@ -21,20 +21,23 @@ pub async fn handler(
 ) -> Result<Html<String>, Redirect> {
     let client = Client::new();
 
-    let meme: Meme = client
+    let response = client
         .get(format!("http://localhost:3000/meme/get/{}", id))
         .send()
         .await
         .map_err(|e| {
             eprintln!("{}:{} - {}", file!(), line!(), e);
             Redirect::to("/error")
-        })?
-        .json()
-        .await
-        .map_err(|e| {
-            eprintln!("{}:{} - {}", file!(), line!(), e);
-            Redirect::to("/error")
         })?;
+
+    if response.status() == StatusCode::NOT_FOUND {
+        return Err(Redirect::to("/not_found"));
+    };
+
+    let meme: Meme = response.json().await.map_err(|e| {
+        eprintln!("{}:{} - {}", file!(), line!(), e);
+        Redirect::to("/error")
+    })?;
 
     let mut context = Context::new();
     context.insert("meme", &meme);

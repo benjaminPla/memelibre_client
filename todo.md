@@ -1,1 +1,1 @@
-- [] add 404.html, add no hay plata meme
+- [x] add 404.html, add no hay plata meme

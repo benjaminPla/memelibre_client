@@ -46,6 +46,7 @@ async fn main() -> Result<(), Redirect> {
         .route("/", get(controllers::home::handler))
         .route("/meme/{id}", get(controllers::meme::handler))
         .route("/error", get(controllers::error::handler))
+        .route("/not_found", get(controllers::not_found::handler))
         .route("/upload", get(controllers::upload::handler))
         .with_state(app_state)
         .layer(NormalizePathLayer::trim_trailing_slash())
