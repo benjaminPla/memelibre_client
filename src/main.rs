@@ -1,4 +1,4 @@
-use axum::{response::Redirect, routing::get, Router};
+use axum::{routing::get, Router};
 use std::env;
 use std::sync::Arc;
 use std::time::Duration;
@@ -16,22 +16,13 @@ pub struct AppState {
 }
 
 #[tokio::main]
-async fn main() -> Result<(), Redirect> {
+async fn main() {
     let timeout_duration = env::var("TIMEOUT_DURATION")
-        .map_err(|e| {
-            eprintln!("{}:{} - {}", file!(), line!(), e);
-            Redirect::to("/error")
-        })?
+        .expect("Missing TIMEOUT_DURATION env var")
         .parse::<u64>()
-        .map_err(|e| {
-            eprintln!("{}:{} - {}", file!(), line!(), e);
-            Redirect::to("/error")
-        })?;
+        .expect("Error parsing TIMEOUT_DURATION env var");
 
-    let tera = Tera::new("src/templates/**/*").map_err(|e| {
-        eprintln!("{}:{} - {}", file!(), line!(), e);
-        Redirect::to("/error")
-    })?;
+    let tera = Tera::new("src/templates/**/*").expect("Error initializing Tera templates");
 
     let app_state = Arc::new(AppState { tera });
 
@@ -55,14 +46,8 @@ async fn main() -> Result<(), Redirect> {
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3001")
         .await
-        .map_err(|e| {
-            eprintln!("{}:{} - {}", file!(), line!(), e);
-            Redirect::to("/error")
-        })?;
-    axum::serve(listener, app).await.map_err(|e| {
-        eprintln!("{}:{} - {}", file!(), line!(), e);
-        Redirect::to("/error")
-    })?;
-
-    Ok(())
+        .expect("Error binding to port 3001");
+    axum::serve(listener, app)
+        .await
+        .expect("Error starting server");
 }
