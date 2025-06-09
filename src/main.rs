@@ -4,8 +4,8 @@ use std::sync::Arc;
 use std::time::Duration;
 use tera::Tera;
 use tower_http::{
-    compression::CompressionLayer, cors::CorsLayer, limit::RequestBodyLimitLayer,
-    normalize_path::NormalizePathLayer, services::ServeDir, timeout::TimeoutLayer,
+    compression::CompressionLayer, normalize_path::NormalizePathLayer, services::ServeDir,
+    timeout::TimeoutLayer,
 };
 
 mod controllers;
@@ -17,16 +17,6 @@ pub struct AppState {
 
 #[tokio::main]
 async fn main() -> Result<(), Redirect> {
-    let max_request_size = env::var("MAX_REQUEST_SIZE")
-        .map_err(|e| {
-            eprintln!("{}:{} - {}", file!(), line!(), e);
-            Redirect::to("/error")
-        })?
-        .parse::<usize>()
-        .map_err(|e| {
-            eprintln!("{}:{} - {}", file!(), line!(), e);
-            Redirect::to("/error")
-        })?;
     let timeout_duration = env::var("TIMEOUT_DURATION")
         .map_err(|e| {
             eprintln!("{}:{} - {}", file!(), line!(), e);
@@ -59,10 +49,8 @@ async fn main() -> Result<(), Redirect> {
         .route("/upload", get(controllers::upload::handler))
         .with_state(app_state)
         .layer(NormalizePathLayer::trim_trailing_slash())
-        .layer(CorsLayer::permissive())
         .layer(CompressionLayer::new())
-        .layer(TimeoutLayer::new(Duration::from_secs(timeout_duration)))
-        .layer(RequestBodyLimitLayer::new(max_request_size));
+        .layer(TimeoutLayer::new(Duration::from_secs(timeout_duration)));
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3001")
         .await
