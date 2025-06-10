@@ -31,7 +31,7 @@
           notification.textContent = "Cargando...";
 
           try {
-            const response = await fetch(`http://localhost:3000/load_more/${lastId}`);
+            const response = await fetch(`{{ api_url }}/load_more/${lastId}`);
             const html = await response.text();
 
             if (!html.trim()) {

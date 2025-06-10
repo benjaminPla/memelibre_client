@@ -4,6 +4,7 @@ use axum::{
 };
 use reqwest::{Client, StatusCode};
 use serde::{Deserialize, Serialize};
+use std::env;
 use std::sync::Arc;
 use tera::Context;
 
@@ -19,10 +20,15 @@ pub async fn handler(
     State(state): State<Arc<AppState>>,
     Path(id): Path<i32>,
 ) -> Result<Html<String>, Redirect> {
+    let api_url = env::var("API_URL").map_err(|e| {
+        eprintln!("{}:{} - {}", file!(), line!(), e);
+        Redirect::to("/error")
+    })?;
+
     let client = Client::new();
 
     let response = client
-        .get(format!("http://localhost:3000/meme/get/{}", id))
+        .get(format!("{}/meme/get/{}", api_url, id))
         .send()
         .await
         .map_err(|e| {

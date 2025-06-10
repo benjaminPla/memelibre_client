@@ -55,6 +55,7 @@ pub async fn handler(State(state): State<Arc<AppState>>) -> Result<Html<String>,
 
     let mut context = Context::new();
     context.insert("memes", &memes_html);
+    context.insert("api_url", &api_url);
 
     let rendered = state.tera.render("home.html", &context).map_err(|e| {
         eprintln!("{}:{} - {}", file!(), line!(), e);
