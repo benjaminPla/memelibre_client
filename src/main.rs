@@ -17,12 +17,19 @@ pub struct AppState {
 
 #[tokio::main]
 async fn main() {
+    std::env::set_var("RUST_LOG", "info");
+
     let timeout_duration = env::var("TIMEOUT_DURATION")
         .expect("Missing TIMEOUT_DURATION env var")
         .parse::<u64>()
         .expect("Error parsing TIMEOUT_DURATION env var");
 
-    let tera = Tera::new("src/templates/**/*").expect("Error initializing Tera templates");
+    let templates_dir = if std::path::Path::new("src/templates").exists() {
+        "src/templates/**/*"
+    } else {
+        "templates/**/*"
+    };
+    let tera = Tera::new(templates_dir).expect("Error initializing Tera templates");
 
     let app_state = Arc::new(AppState { tera });
 
@@ -47,6 +54,7 @@ async fn main() {
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3001")
         .await
         .expect("Error binding to port 3001");
+
     axum::serve(listener, app)
         .await
         .expect("Error starting server");
