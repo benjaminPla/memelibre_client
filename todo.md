@@ -1,5 +1,6 @@
-- [ ] add watermark
+- [ ] add google adds
 - [ ] check upload's 400 errors
-- [ ] update styles, mercado libre like
+- [ ] fix navbar center - check logo
 - [x] add 404.html, add no hay plata meme
 - [x] add adds
+- [x] update styles, mercado libre like

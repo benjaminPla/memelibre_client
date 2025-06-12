@@ -36,6 +36,7 @@ async fn main() {
 
     let app = Router::new()
         .nest_service("/public", ServeDir::new(public_dir))
+        .route("/ads.txt", get(controllers::ads::handler))
         .route("/", get(controllers::home::handler))
         .route("/meme/{id}", get(controllers::meme::handler))
         .route("/error", get(controllers::error::handler))
