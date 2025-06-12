@@ -1,3 +1,5 @@
+- [ ] add watermark
 - [ ] check upload's 400 errors
 - [ ] update styles, mercado libre like
 - [x] add 404.html, add no hay plata meme
+- [x] add adds
