@@ -13,32 +13,38 @@
         <img src="public/assets/not_found.webp" alt="No hay plata meme"/>
     {% endif %}
 
-    <div id="sentinel"></div>
+    <div id="sentinel" data-api-url="{{ api_url }}"></div>
 
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener("DOMContentLoaded", () => {
         const sentinel = document.getElementById("sentinel");
         if (!sentinel) return;
+        const apiUrl = sentinel.dataset.apiUrl;
+
+        let isLoading = false;
 
         const loadMoreMemes = async (lastId) => {
+          if (isLoading) return;
           try {
-            const response = await fetch(`{{ api_url }}/load_more/${lastId}`);
+            const response = await fetch(`${apiUrl}/load_more/${encodeURIComponent(lastId)}`);
             const html = await response.text();
             sentinel.insertAdjacentHTML("beforebegin", html);
             showNotification();
           } catch (error) {
             showNotification("error", "Qué pasó ahora, la puta madre");
+          } finally {
+            isLoading = false;
           }
         };
 
         const observer = new IntersectionObserver(
           (entries) => {
-            if (!entries[0].isIntersecting) return;
+            if (!entries[0].isIntersecting || isLoading) return;
 
             const memes = document.querySelectorAll(".meme-container");
             const lastMeme = memes[memes.length - 1] || null;
-            const lastId = lastMeme?.querySelector("button")?.dataset.id;
-
+            if (!lastMeme) return;
+            const lastId = lastMeme.querySelector("button").dataset.id;
             if (lastId) loadMoreMemes(lastId);
           },
           {

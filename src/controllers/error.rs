@@ -12,16 +12,16 @@ pub async fn handler(State(state): State<Arc<AppState>>) -> Html<String> {
         .unwrap_or_else(|e| {
             eprintln!("{}:{} - Tera render error: {}", file!(), line!(), e);
             r#"
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <title>Meme Libre</title>
-        </head>
-        <body>
-            <h1>Error</h1>
-        </body>
-        </html>
-        "#
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <title>Meme Libre</title>
+            </head>
+            <body>
+                <h1>Error</h1>
+            </body>
+            </html>
+            "#
             .to_string()
         });
 

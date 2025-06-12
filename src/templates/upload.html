@@ -36,10 +36,16 @@
                     body,
                 });
 
-                console.log(0,response)
                 if (!response.ok) {
-                    console.log(1,response)
-                    showNotification("error", response.msg);
+                    console.log(response)
+                    switch (response.status) {
+                        case 413: {
+                            showNotification("error", "El meme es muy grande, metele motosierra");
+                        }
+                        default: {
+                            showNotification("error", response.statusText);
+                        }
+                    }
                     return;
                 }
 

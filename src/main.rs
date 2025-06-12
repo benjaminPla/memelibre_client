@@ -24,12 +24,7 @@ async fn main() {
         .parse::<u64>()
         .expect("Error parsing TIMEOUT_DURATION env var");
 
-    let templates_dir = if std::path::Path::new("src/templates").exists() {
-        "src/templates/**/*"
-    } else {
-        "templates/**/*"
-    };
-    let tera = Tera::new(templates_dir).expect("Error initializing Tera templates");
+    let tera = Tera::new("src/templates/**/*").expect("Error initializing Tera templates");
 
     let app_state = Arc::new(AppState { tera });
 

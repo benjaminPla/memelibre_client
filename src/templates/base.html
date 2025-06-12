@@ -2,19 +2,18 @@
 <html lang="en">
   <head>
     {% block head %}
-        <!-- General Meta -->
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content="Los memes que likea El Javo" />
         <meta name="author" content="el_gordo_compu" />
-        <!-- Open Graph -->
+
         <meta property="og:title" content="Meme Libre" />
         <meta property="og:description" content="Los memes que likea El Javo" />
         <meta property="og:image" content="https://memelibre.com/public/assets/logo.png" />
         <meta property="og:url" content="https://memelibre.com/" />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="es_AR" />
-        <!-- Twitter Card -->
+
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Meme Libre" />
         <meta name="twitter:description" content="Los memes que likea El Javo" />
@@ -23,7 +22,7 @@
 
         <title>Meme Libe</title>
 
-        <link rel="icon" href="public/assets/logo.png" type="image/png" />
+        <link rel="icon" href="https://memelibre.com/public/assets/logo.png" type="image/png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
@@ -37,35 +36,45 @@
   </head>
 
   <body>
+    <div id="notification-container" style="display: none">
+      <p id="notification-text"></p>
+      <p id="notification-btn">X</p>
+    </div>
     {% include "_navbar.html" %}
-    {% include "_notification.html" %}
     {% block body %}{% endblock body %}
   </body>
 
-  <script>
-      const showNotification = (type = "info", message = "") => {
-      const notificationContainer = document.getElementById("notification-container");
-      const notification = document.getElementById("notification");
-      
-      if (!notificationContainer || !notification) return;
-      
-      notificationContainer.style.display = message ? "flex" : "none";
-      switch (type) {
-        case "error": {
-          notificationContainer.style.backgroundColor = "var(--orange)";
-          notification.textContent = "Error: " + message;
-          break;
-        }
-        default: {
-          notificationContainer.style.backgroundColor = "var(--yellow)";
-          notification.textContent = "Info: " + message;
-          break;
-        }
-      }
+    <script>
+      const notificationContainer = document.getElementById(
+          "notification-container",
+        );
+      const notificationText = document.getElementById("notification-text");
+      const notificationBtn = document.getElementById("notification-btn");
 
-      setTimeout(() => {
+      const showNotification = (type = "info", message = "") => {
+        if (!notificationContainer || !notificationText || !notificationBtn) return;
+
+        notificationContainer.style.display = message ? "flex" : "none";
+        switch (type) {
+          case "error": {
+            notificationContainer.style.backgroundColor = "var(--orange)";
+            notificationText.textContent = "Error: " + message;
+            break;
+          }
+          default: {
+            notificationContainer.style.backgroundColor = "var(--yellow)";
+            notificationText.textContent = "Info: " + message;
+            break;
+          }
+        }
+
+        setTimeout(() => {
+          notificationContainer.style.display = "none";
+        }, 3000);
+      };
+
+      notificationBtn.addEventListener("click", () => {
         notificationContainer.style.display = "none";
-      }, 3000);
-    };
-  </script>
+      });
+    </script>
 </html>
