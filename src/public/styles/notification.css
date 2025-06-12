@@ -1,10 +1,17 @@
 #notification-container {
   background-color: var(--highlight-bg);
-  border-radius: var(--border-radius);
+  bottom: 0;
   color: var(--text-primary);
-  padding: var(--spacing-small);
+  display: flex;
+  font-size: var(--font-small-size) !important;
+  justify-content: space-between;
+  left: 0;
+  padding: 0 var(--spacing-small);
   position: fixed;
-  right: var(--spacing-base);
-  top: var(--spacing-base);
+  width: 100%;
   z-index: 10;
+}
+
+#notification-btn {
+  cursor: pointer;
 }

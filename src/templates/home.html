@@ -6,8 +6,6 @@
 {% endblock head %}
 
 {% block body %}
-    {% include "_navbar.html" %}
-    {% include "_notification.html" %}
     {% if memes %}
         {{ memes | safe }}
     {% else %}
@@ -15,79 +13,42 @@
         <img src="public/assets/not_found.webp" alt="No hay plata meme"/>
     {% endif %}
 
-    <div id="loading-sentinel" style="height: 1px;"></div>
+    <div id="sentinel"></div>
 
     <script>
-        let canLoadMore = true;
+      document.addEventListener("DOMContentLoaded", () => {
+        const sentinel = document.getElementById("sentinel");
+        if (!sentinel) return;
 
-        async function loadMoreMemes(lastId) {
-            if (!canLoadMore) return;
+        const loadMoreMemes = async (lastId) => {
+          try {
+            const response = await fetch(`{{ api_url }}/load_more/${lastId}`);
+            const html = await response.text();
+            sentinel.insertAdjacentHTML("beforebegin", html);
+            showNotification();
+          } catch (error) {
+            showNotification("error", "Qué pasó ahora, la puta madre");
+          }
+        };
 
-            const notificationContainer = document.getElementById("notification-container");
-            const notification = document.getElementById("notification");
-            const sentinel = document.getElementById("loading-sentinel");
+        const observer = new IntersectionObserver(
+          (entries) => {
+            if (!entries[0].isIntersecting) return;
 
-            canLoadMore = false;
-            notificationContainer.style.display = "block";
-            notification.textContent = "Cargando...";
+            const memes = document.querySelectorAll(".meme-container");
+            const lastMeme = memes[memes.length - 1] || null;
+            const lastId = lastMeme?.querySelector("button")?.dataset.id;
 
-            try {
-                const response = await fetch(`{{ api_url }}/load_more/${lastId}`);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const html = await response.text();
+            if (lastId) loadMoreMemes(lastId);
+          },
+          {
+            root: null,
+            rootMargin: "0px",
+            threshold: 0,
+          },
+        );
 
-                if (!html.trim()) {
-                    notification.textContent = "No hay más memes.";
-                    sentinel.style.display = "none";
-                    setTimeout(() => {
-                        notificationContainer.style.display = "none";
-                    }, 3000);
-                    return;
-                }
-
-                sentinel.insertAdjacentHTML("beforebegin", html);
-
-                notificationContainer.style.display = "none";
-                notification.textContent = "";
-                canLoadMore = true;
-            } catch (error) {
-                console.error("Error loading more memes:", error);
-                notification.textContent = "Error al cargar más memes.";
-                setTimeout(() => {
-                    notificationContainer.style.display = "none";
-                    notification.textContent = "";
-                }, 3000);
-                canLoadMore = true;
-            }
-        }
-
-        function setupInfiniteScroll() {
-            const sentinel = document.getElementById("loading-sentinel");
-            if (!sentinel) return;
-
-            const observer = new IntersectionObserver(
-                (entries) => {
-                    if (entries[0].isIntersecting && canLoadMore) {
-                        const memes = document.querySelectorAll(".meme-container");
-                        const lastMeme = memes[memes.length - 1];
-                        const lastId = lastMeme?.querySelector("button")?.dataset.id;
-                        if (lastId) {
-                            loadMoreMemes(lastId);
-                        }
-                    }
-                },
-                {
-                    root: null,
-                    rootMargin: "100px",
-                    threshold: 0,
-                }
-            );
-
-            observer.observe(sentinel);
-        }
-
-        document.addEventListener("DOMContentLoaded", setupInfiniteScroll);
+        observer.observe(sentinel);
+      });
     </script>
 {% endblock body %}

@@ -37,6 +37,35 @@
   </head>
 
   <body>
+    {% include "_navbar.html" %}
+    {% include "_notification.html" %}
     {% block body %}{% endblock body %}
   </body>
+
+  <script>
+      const showNotification = (type = "info", message = "") => {
+      const notificationContainer = document.getElementById("notification-container");
+      const notification = document.getElementById("notification");
+      
+      if (!notificationContainer || !notification) return;
+      
+      notificationContainer.style.display = message ? "flex" : "none";
+      switch (type) {
+        case "error": {
+          notificationContainer.style.backgroundColor = "var(--orange)";
+          notification.textContent = "Error: " + message;
+          break;
+        }
+        default: {
+          notificationContainer.style.backgroundColor = "var(--yellow)";
+          notification.textContent = "Info: " + message;
+          break;
+        }
+      }
+
+      setTimeout(() => {
+        notificationContainer.style.display = "none";
+      }, 3000);
+    };
+  </script>
 </html>

@@ -1,3 +1,15 @@
-<div id="notification-container" style="display: none;">
+<div id="notification-container" style="display: none">
   <p id="notification"></p>
+  <p id="notification-btn">X</p>
 </div>
+
+<script>
+  const notificationContainer = document.getElementById(
+    "notification-container",
+  );
+  const notificationBtn = document.getElementById("notification-btn");
+
+  notificationBtn.addEventListener("click", () => {
+    notificationContainer.style.display = "none";
+  });
+</script>

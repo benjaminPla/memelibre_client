@@ -1,22 +1,19 @@
 <div class="meme-container">
   <img class="meme" src="{{ meme.image_url }}" alt="memelibre" loading="lazy" />
-  <button onclick="sharePage(this)" data-id="{{ meme.id }}">🔗 Compartir</button>
+  <button onclick="sharePage(this)" data-id="{{ meme.id }}">
+    🔗 Compartir
+  </button>
 </div>
 
 <script>
   function sharePage(button) {
-    const notificationContainer = document.getElementById(
-      "notification-container",
-    );
-    const notification = document.getElementById("notification");
-
     const memeId = button.getAttribute("data-id");
     const shareUrl = `${window.location.origin}/meme/${memeId}`;
     if (navigator.share) {
       navigator
         .share({
           title: document.title,
-          text: "“¡Viva la libertad, carajo!",
+          text: "¡Viva la libertad, carajo!",
           url: shareUrl,
         })
         .catch(() => {});
@@ -24,22 +21,10 @@
       navigator.clipboard
         .writeText(shareUrl)
         .then(() => {
-          notificationContainer.style.display = "block";
-          notification.textContent = "Link copied to clipboard!";
-
-          setTimeout(() => {
-            notificationContainer.style.display = "none";
-          }, 3000);
+          showNotification("info", "Link copiado!");
         })
         .catch((err) => {
-          notificationContainer.style.display = "block";
-          notification.textContent = "Failed to copy link.";
-
-          setTimeout(() => {
-            notificationContainer.style.display = "none";
-          }, 3000);
-
-          console.error("Clipboard error:", err);
+          showNotification("error", "Link no copiado");
         });
     }
   }
