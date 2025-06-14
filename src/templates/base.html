@@ -52,8 +52,14 @@
       const notificationText = document.getElementById("notification-text");
       const notificationBtn = document.getElementById("notification-btn");
 
+      let notificationTimeout;
+
       const showNotification = (type = "info", message = "") => {
         if (!notificationContainer || !notificationText || !notificationBtn) return;
+
+        if (notificationTimeout) {
+          clearTimeout(notificationTimeout);
+        }
 
         notificationContainer.style.display = message ? "flex" : "none";
         switch (type) {
@@ -69,7 +75,7 @@
           }
         }
 
-        setTimeout(() => {
+        notificationTimeout = setTimeout(() => {
           notificationContainer.style.display = "none";
         }, 3000);
       };

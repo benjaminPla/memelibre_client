@@ -1,7 +1,7 @@
-- [ ] check upload's 400 errors
-- [ ] deactivate infinite scroll if load_more return nothing
 - [x] add 404.html, add no hay plata meme
 - [x] add adds
 - [x] add google adds
+- [x] check upload's 400 errors
+- [x] deactivate infinite scroll if load_more return nothing
 - [x] fix navbar center - check logo
 - [x] update styles, mercado libre like

@@ -28,6 +28,11 @@
           try {
             const response = await fetch(`${apiUrl}/load_more/${encodeURIComponent(lastId)}`);
             const html = await response.text();
+            if (!html || html.trim() === "") {
+              observer.disconnect();
+              showNotification("info", "No hay más memes");
+              return;
+            }
             sentinel.insertAdjacentHTML("beforebegin", html);
             showNotification();
           } catch (error) {
