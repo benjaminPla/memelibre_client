@@ -1,0 +1,24 @@
+.navbar {
+	align-items: center;
+	background-color: var(--yellow);
+	display: grid;
+	gap: var(--spacing-base);
+	grid-template-columns: 1fr auto 1fr;
+	padding: var(--spacing-base) 0;
+	width: 100%;
+}
+
+.navbar-items {
+	display: flex;
+	gap: var(--spacing-base);
+	justify-content: center;
+}
+
+.logo {
+	max-height: 32px;
+}
+
+#notification-btn {
+	all: unset;
+	cursor: pointer;
+}
