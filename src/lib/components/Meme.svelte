@@ -18,13 +18,19 @@
 				credentials: 'include',
 				method: 'POST'
 			});
-			if (!response.ok) throw new Error();
+			if (!response.ok) {
+				if (response.status === 401) {
+					window.location = `${apiUrl}/auth`;
+				}
+			}
+
 			if (response.status === 201) {
 				currentLikeCount++;
+				window.showNotification('success', '¡Éxtasis!');
 			} else if (response.status === 204) {
 				currentLikeCount--;
+				window.showNotification('success', '¡AFUERA!');
 			}
-			window.showNotification('success', '¡Éxtasis!');
 		} catch {
 			window.showNotification('error', 'Qué pasó ahora, la puta madre');
 		} finally {
