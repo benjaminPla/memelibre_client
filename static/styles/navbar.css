@@ -17,8 +17,3 @@
 .logo {
 	max-height: 32px;
 }
-
-#notification-btn {
-	all: unset;
-	cursor: pointer;
-}

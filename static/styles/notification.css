@@ -1,5 +1,4 @@
-#notification-container {
-	background-color: var(--highlight-bg);
+.notification-container {
 	bottom: 0;
 	color: var(--text-primary);
 	display: flex;
@@ -12,6 +11,15 @@
 	z-index: 10;
 }
 
+.info {
+	background-color: var(--yellow);
+}
+
+.error {
+	background-color: var(--orange);
+}
+
 #notification-btn {
+	all: unset;
 	cursor: pointer;
 }

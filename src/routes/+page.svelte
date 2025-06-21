@@ -12,32 +12,24 @@
 	let observer: IntersectionObserver;
 	let sentinel: HTMLDivElement;
 
-	const loadMoreMemes = async (lastId: string): Promise<void> => {
+	const loadMoreMemes = async (offset: number): Promise<void> => {
 		if (isLoading) return;
 		isLoading = true;
 
 		try {
-			const response = await fetch(`${apiUrl}/load_more/${lastId}`);
-
-			if (!response.ok) {
-				throw new Error(`HTTP ${response.status}`);
-			}
+			const response = await fetch(`${apiUrl}/meme/get?offset=${offset}`);
 
 			const newMemes = await response.json();
 
-			if (!newMemes || newMemes.length === 0) {
+			if (newMemes.length === 0) {
 				observer.disconnect();
-				if (window.showNotification) {
-					window.showNotification('info', 'No hay más memes');
-				}
+				window.showNotification('info', 'No hay más memes');
 				return;
 			}
 
 			memes = [...memes, ...newMemes];
 
-			if (window.showNotification) {
-				window.showNotification();
-			}
+			window.showNotification();
 		} catch {
 			window.showNotification('error', 'Qué pasó ahora, la puta madre');
 		} finally {
@@ -46,15 +38,13 @@
 	};
 
 	onMount(() => {
-		if (!sentinel) return;
-
 		observer = new IntersectionObserver(
 			(entries: IntersectionObserverEntry[]) => {
 				if (!entries[0].isIntersecting || isLoading || memes.length === 0) return;
 
 				const lastMeme = memes[memes.length - 1];
 				if (lastMeme?.id) {
-					loadMoreMemes(lastMeme.id);
+					loadMoreMemes(Number(lastMeme.id));
 				}
 			},
 			{
@@ -74,15 +64,11 @@
 	});
 </script>
 
-<svelte:head>
-	<link rel="stylesheet" href="/styles/home.css" />
-</svelte:head>
-
 {#each memes as meme (meme.id)}
 	<Meme {meme} />
 {/each}
 
-<div bind:this={sentinel} id="sentinel" data-api-url={data.apiUrl}></div>
+<div bind:this={sentinel} id="sentinel" data-api-url={data.apiUrl} style="height: 1px;"></div>
 
 {#if isLoading}
 	<div class="loading-indicator">Cargando más memes...</div>

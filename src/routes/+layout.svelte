@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import Navbar from '$lib/components/Navbar.svelte';
+	import { onMount } from 'svelte';
 
-	let notificationContainer: HTMLDivElement;
 	let notificationText: string = '';
-	let notificationVisible: boolean = false;
 	let notificationTimeout: NodeJS.Timeout;
+	let notificationType: 'info' | 'error' = 'info';
+	let notificationVisible: boolean = false;
 
 	const showNotification = (type: 'info' | 'error' = 'info', message: string = ''): void => {
 		if (notificationTimeout) {
@@ -18,16 +18,11 @@
 		}
 
 		notificationVisible = true;
-
-		if (type === 'error') {
-			notificationText = 'Error: ' + message;
-			notificationContainer.style.backgroundColor = 'var(--orange)';
-		} else {
-			notificationText = 'Info: ' + message;
-			notificationContainer.style.backgroundColor = 'var(--yellow)';
-		}
+		notificationType = type;
+		notificationText = type === 'error' ? 'Error: ' + message : 'Info: ' + message;
 
 		notificationTimeout = setTimeout(() => {
+			notificationText = '';
 			notificationVisible = false;
 		}, 3000);
 	};
@@ -42,11 +37,10 @@
 </script>
 
 <div
-	bind:this={notificationContainer}
-	id="notification-container"
+	class="notification-container {notificationType}"
 	style="display: {notificationVisible ? 'flex' : 'none'}"
 >
-	<p id="notification-text">{notificationText}</p>
+	<p>{notificationText}</p>
 	<button id="notification-btn" on:click={hideNotification}>X</button>
 </div>
 
