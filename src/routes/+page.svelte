@@ -49,7 +49,7 @@
 			},
 			{
 				root: null,
-				rootMargin: '100px',
+				rootMargin: '10px',
 				threshold: 0
 			}
 		);

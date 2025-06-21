@@ -2,12 +2,14 @@
 	import Navbar from '$lib/components/Navbar.svelte';
 	import { onMount } from 'svelte';
 
+	type NotificationType = 'error' | 'info' | 'success';
+
 	let notificationText: string = '';
 	let notificationTimeout: NodeJS.Timeout;
-	let notificationType: 'info' | 'error' = 'info';
+	let notificationType: NotificationType;
 	let notificationVisible: boolean = false;
 
-	const showNotification = (type: 'info' | 'error' = 'info', message: string = ''): void => {
+	const showNotification = (type: NotificationType = 'info', message: string = ''): void => {
 		if (notificationTimeout) {
 			clearTimeout(notificationTimeout);
 		}
@@ -19,7 +21,8 @@
 
 		notificationVisible = true;
 		notificationType = type;
-		notificationText = type === 'error' ? 'Error: ' + message : 'Info: ' + message;
+		notificationText =
+			type === 'error' ? 'Error: ' + message : type === 'success' ? message : 'Info: ' + message;
 
 		notificationTimeout = setTimeout(() => {
 			notificationText = '';

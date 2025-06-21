@@ -12,3 +12,9 @@
 	max-height: 95vh;
 	max-width: 100%;
 }
+
+.actions-container {
+	display: flex;
+	gap: var(--spacing-small);
+	width: 100%;
+}

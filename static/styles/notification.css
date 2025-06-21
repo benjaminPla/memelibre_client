@@ -11,12 +11,16 @@
 	z-index: 10;
 }
 
+.error {
+	background-color: var(--orange);
+}
+
 .info {
 	background-color: var(--yellow);
 }
 
-.error {
-	background-color: var(--orange);
+.success {
+	background-color: var(--green);
 }
 
 #notification-btn {
