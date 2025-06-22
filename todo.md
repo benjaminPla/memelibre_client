@@ -1,1 +1,2 @@
 - [ ] add random success/fail messages
+- [x] change notification-btn 'X' - bad translations

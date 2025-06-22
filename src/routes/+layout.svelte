@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Close from '$lib/components/icons/Close.svelte';
 	import Navbar from '$lib/components/Navbar.svelte';
 	import { onMount } from 'svelte';
 
@@ -44,7 +45,7 @@
 	style="display: {notificationVisible ? 'flex' : 'none'}"
 >
 	<p>{notificationText}</p>
-	<button id="notification-btn" on:click={hideNotification}>X</button>
+	<button id="notification-btn" on:click={hideNotification}><Close /></button>
 </div>
 
 <Navbar />

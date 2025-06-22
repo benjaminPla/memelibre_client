@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { env } from '$env/dynamic/public';
-	import LikeIcon from '$lib/components/LikeIcon.svelte';
-	import ShareIcon from '$lib/components/ShareIcon.svelte';
+	import Like from '$lib/components/icons/Like.svelte';
+	import Share from '$lib/components/icons/Share.svelte';
 
 	export let meme: { id: string; image_url: string; like_count: number };
 
@@ -23,13 +23,10 @@
 					window.location = `${apiUrl}/auth`;
 				}
 			}
-
 			if (response.status === 201) {
 				currentLikeCount++;
-				window.showNotification('success', '¡Éxtasis!');
 			} else if (response.status === 204) {
 				currentLikeCount--;
-				window.showNotification('success', '¡AFUERA!');
 			}
 		} catch {
 			window.showNotification('error', 'Qué pasó ahora, la puta madre');
@@ -65,7 +62,7 @@
 <div class="meme-container">
 	<img class="meme" src={meme.image_url} alt="memelibre" loading="lazy" />
 	<div class="actions-container">
-		<button on:click={handleLike}><LikeIcon />{currentLikeCount}</button>
-		<button on:click={handleShare}><ShareIcon /></button>
+		<button on:click={handleLike}><Like />{currentLikeCount}</button>
+		<button on:click={handleShare}><Share /></button>
 	</div>
 </div>
