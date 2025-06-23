@@ -1,14 +1,13 @@
 import { env } from '$env/dynamic/public';
-import { error, redirect } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
 import type { User } from '$lib/types/index';
 
-export const load: LayoutServerLoad = async ({ cookies }) => {
+export const load: LayoutServerLoad = async ({ cookies, fetch }) => {
 	const sessionToken: string | undefined = cookies.get('session_token');
-	const isLoggedIn = !!sessionToken;
 
 	if (!sessionToken) {
-		return { isLoggedIn, user: null };
+		return { isLoggedIn: false, user: null };
 	}
 
 	const apiUrl = env.PUBLIC_API_URL;
@@ -21,12 +20,18 @@ export const load: LayoutServerLoad = async ({ cookies }) => {
 		});
 
 		if (!response.ok) {
-			redirect(302, `${apiUrl}/auth/login`);
+			cookies.set('session_token', '', {
+				path: '/',
+				httpOnly: true,
+				sameSite: 'lax',
+				expires: new Date(0)
+			});
+			return { isLoggedIn: false, user: null };
 		}
 
 		const user: User = await response.json();
 
-		return { isLoggedIn, user };
+		return { isLoggedIn: true, user };
 	} catch (e: any) {
 		if (e?.status) throw e;
 
