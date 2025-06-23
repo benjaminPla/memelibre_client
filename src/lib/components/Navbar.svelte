@@ -9,15 +9,25 @@
 
 	const apiUrl = env.PUBLIC_API_URL;
 	let isMobile: boolean;
-	let mobileMenuOpen = false;
-	let userMenuOpen = false;
+	let detailsHamburger: HTMLDetailsElement;
+	let detailsUser: HTMLDetailsElement;
 
 	onMount(() => {
 		const handleResize = () => {
-			isMobile = window.innerWidth > 768;
+			isMobile = window.innerWidth < 768;
+		};
+
+		const handleDetailsToggle = (event: MouseEvent) => {
+			if (detailsHamburger && !detailsHamburger.contains(event.target as Node)) {
+				detailsHamburger.open = false;
+			}
+			if (detailsUser && !isMobile && !detailsUser.contains(event.target as Node)) {
+				detailsUser.open = false;
+			}
 		};
 
 		window.addEventListener('resize', handleResize);
+		document.addEventListener('click', handleDetailsToggle);
 		return () => window.removeEventListener('resize', handleResize);
 	});
 </script>
@@ -27,30 +37,9 @@
 </svelte:head>
 
 {#if isMobile}
-	<nav class="navbar">
-		<img class="logo" src="/assets/logo.png" alt="Meme Libre logo" loading="lazy" />
-		<ul class="navbar-items">
-			<li><a href="/" data-sveltekit-preload-data="hover">Hogar</a></li>
-			<li><a href="/upload" data-sveltekit-preload-data="hover">Subir</a></li>
-		</ul>
-		<ul class="navbar-items user-actions-container">
-			{#if isLoggedIn}
-				<details class="details">
-					<summary>{user.username}</summary>
-					<ul class="user-actions">
-						<li><a class="user-actions-option" href="/user/put">Cuenta</a></li>
-						<li><a class="user-actions-option" href={`${apiUrl}/auth/logout`}>Logout</a></li>
-					</ul>
-				</details>
-			{:else}
-				<li><a href={`${apiUrl}/auth/login`}>Login</a></li>
-			{/if}
-		</ul>
-	</nav>
-{:else}
 	<nav class="navbar-mobile">
 		<img class="logo" src="/assets/logo.png" alt="Meme Libre logo" loading="lazy" />
-		<details>
+		<details bind:this={detailsHamburger}>
 			<summary class="summary-mobile"><Hamburger /></summary>
 			<ul class="navbar-items-mobile">
 				<li><a href="/" data-sveltekit-preload-data="hover">Hogar</a></li>
@@ -59,7 +48,13 @@
 					<details class="details-user-mobile">
 						<summary>{user.username}</summary>
 						<ul class="user-actions-mobile">
-							<li><a class="user-actions-option" href="/user/put">Cuenta</a></li>
+							<li>
+								<a
+									class="user-actions-option"
+									href="/user/put"
+									on:click={() => (detailsHamburger.open = false)}>Cuenta</a
+								>
+							</li>
 							<li><a class="user-actions-option" href={`${apiUrl}/auth/logout`}>Logout</a></li>
 						</ul>
 					</details>
@@ -68,5 +63,32 @@
 				{/if}
 			</ul>
 		</details>
+	</nav>
+{:else}
+	<nav class="navbar">
+		<img class="logo" src="/assets/logo.png" alt="Meme Libre logo" loading="lazy" />
+		<ul class="navbar-items">
+			<li><a href="/" data-sveltekit-preload-data="hover">Hogar</a></li>
+			<li><a href="/upload" data-sveltekit-preload-data="hover">Subir</a></li>
+		</ul>
+		<ul class="navbar-items user-actions-container">
+			{#if isLoggedIn}
+				<details bind:this={detailsUser} class="details">
+					<summary>{user.username}</summary>
+					<ul class="user-actions">
+						<li>
+							<a
+								class="user-actions-option"
+								href="/user/put"
+								on:click={() => (detailsUser.open = false)}>Cuenta</a
+							>
+						</li>
+						<li><a class="user-actions-option" href={`${apiUrl}/auth/logout`}>Logout</a></li>
+					</ul>
+				</details>
+			{:else}
+				<li><a href={`${apiUrl}/auth/login`}>Login</a></li>
+			{/if}
+		</ul>
 	</nav>
 {/if}

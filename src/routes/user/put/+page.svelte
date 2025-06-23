@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { env } from '$env/dynamic/public';
-	import { invalidateAll } from '$app/navigation';
+	import { goto } from '$app/navigation';
 	export let data: PageData;
 
 	const apiUrl = env.PUBLIC_API_URL;
@@ -36,7 +36,7 @@
 			}
 
 			window.showNotification?.('success', '¡Éxtasis!');
-            invalidateAll()
+			goto('/', { invalidateAll: true });
 		} catch {
 			window.showNotification('error', 'Qué pasó ahora, la puta madre');
 		} finally {
