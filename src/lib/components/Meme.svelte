@@ -61,6 +61,9 @@
 
 <div class="meme-container">
 	<img class="meme" src={meme.image_url} alt="memelibre" loading="lazy" />
+	{#if meme.username}
+		<p class="username">{meme.username}</p>
+	{/if}
 	<div class="actions-container">
 		<button on:click={handleLike}><Like />{currentLikeCount}</button>
 		<button on:click={handleShare}><Share /></button>
