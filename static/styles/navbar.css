@@ -45,3 +45,40 @@
 .user-actions-option:hover {
 	color: var(--light-gray);
 }
+
+.navbar-mobile {
+	align-items: center;
+	background-color: var(--yellow);
+	display: flex;
+	justify-content: space-between;
+	padding: var(--spacing-base);
+	position: relative;
+	width: 100%;
+}
+
+.summary-mobile {
+	list-style: none;
+}
+
+.navbar-items-mobile {
+	align-items: center;
+	background-color: var(--yellow);
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-small);
+	left: 0;
+	padding: var(--spacing-small);
+	position: absolute;
+	width: 100%;
+}
+
+.user-actions-mobile {
+	align-items: center;
+	background-color: var(--dark-gray);
+	display: flex;
+	flex-direction: column;
+	left: 0;
+	padding: var(--spacing-small);
+	position: absolute;
+	width: 100%;
+}
