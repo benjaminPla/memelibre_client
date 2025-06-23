@@ -21,9 +21,10 @@
 	</ul>
 	<ul class="navbar-items user-actions-container">
 		{#if isLoggedIn}
-			<details class="dialog">
+			<details class="details">
 				<summary>{user.username}</summary>
 				<ul class="user-actions">
+					<li><a class="user-actions-option" href="/user/put">Cuenta</a></li>
 					<li><a class="user-actions-option" href={`${apiUrl}/auth/logout`}>Logout</a></li>
 				</ul>
 			</details>

@@ -5,9 +5,10 @@ import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ cookies }) => {
 	const sessionToken: string | undefined = cookies.get('session_token');
+	const isLoggedIn = !!sessionToken;
 
 	if (!sessionToken) {
-		return { isLoggedIn: !!sessionToken, user: null };
+		return { isLoggedIn, user: null };
 	}
 
 	const apiUrl = env.PUBLIC_API_URL;
@@ -25,7 +26,7 @@ export const load: LayoutServerLoad = async ({ cookies }) => {
 
 		const user: User = await response.json();
 
-		return { isLoggedIn: !!sessionToken, user };
+		return { isLoggedIn, user };
 	} catch (e: any) {
 		if (e?.status) throw e;
 

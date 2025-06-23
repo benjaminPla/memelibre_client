@@ -48,10 +48,6 @@
 	}
 </script>
 
-<svelte:head>
-	<link rel="stylesheet" href="/styles/upload.css" />
-</svelte:head>
-
 <form on:submit={handleSubmit} enctype="multipart/form-data">
 	<div>
 		<label for="file">Meme:</label>

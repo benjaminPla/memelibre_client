@@ -22,7 +22,7 @@
 	max-height: 32px;
 }
 
-.dialog {
+.details {
 	position: relative;
 }
 
@@ -31,8 +31,8 @@
 	border-radius: var(--border-radius-small);
 	padding: var(--spacing-small);
 	position: absolute;
+	right: 0;
 	text-align: right;
-	width: 100%;
 }
 
 .user-actions-option {
@@ -40,4 +40,8 @@
 	display: inline-block;
 	font-size: var(--font-small-size);
 	width: 100%;
+}
+
+.user-actions-option:hover {
+	color: var(--light-gray);
 }
