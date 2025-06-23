@@ -35,7 +35,8 @@
 	--btn-text-color: var(--blue);
 
 	/* Borders and Radius */
-	--border-radius: 0.5rem;
+	--border-radius-normal: 0.5rem;
+	--border-radius-small: 0.3rem;
 
 	/* Spacing */
 	--spacing-base: 1rem;
@@ -87,7 +88,7 @@ button {
 	align-items: center;
 	background-color: var(--blue);
 	border: none;
-	border-radius: var(--border-radius);
+	border-radius: var(--border-radius-normal);
 	color: var(--white);
 	cursor: pointer;
 	display: flex;

@@ -2,6 +2,9 @@
 	import Close from '$lib/components/icons/Close.svelte';
 	import Navbar from '$lib/components/Navbar.svelte';
 	import { onMount } from 'svelte';
+	import type { PageData } from './$types';
+
+	export let data: PageData;
 
 	type NotificationType = 'error' | 'info' | 'success';
 
@@ -48,6 +51,6 @@
 	<button id="notification-btn" on:click={hideNotification}><Close /></button>
 </div>
 
-<Navbar />
+<Navbar isLoggedIn={data.isLoggedIn} user={data.user} />
 
 <slot />

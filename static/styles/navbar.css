@@ -2,9 +2,8 @@
 	align-items: center;
 	background-color: var(--yellow);
 	display: grid;
-	gap: var(--spacing-base);
 	grid-template-columns: 1fr auto 1fr;
-	padding: var(--spacing-base) 0;
+	padding: var(--spacing-base);
 	width: 100%;
 }
 
@@ -14,6 +13,31 @@
 	justify-content: center;
 }
 
+.user-actions-container {
+	cursor: pointer;
+	justify-content: right;
+}
+
 .logo {
 	max-height: 32px;
+}
+
+.dialog {
+	position: relative;
+}
+
+.user-actions {
+	background-color: var(--dark-gray);
+	border-radius: var(--border-radius-small);
+	padding: var(--spacing-small);
+	position: absolute;
+	text-align: right;
+	width: 100%;
+}
+
+.user-actions-option {
+	color: var(--white);
+	display: inline-block;
+	font-size: var(--font-small-size);
+	width: 100%;
 }

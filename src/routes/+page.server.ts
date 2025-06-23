@@ -1,6 +1,6 @@
 import { env } from '$env/dynamic/public';
 import { error } from '@sveltejs/kit';
-import type { Meme } from '$lib/types/meme';
+import type { Meme } from '$lib/types';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ fetch }) => {

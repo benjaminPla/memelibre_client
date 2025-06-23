@@ -20,7 +20,7 @@
 			});
 			if (!response.ok) {
 				if (response.status === 401) {
-					window.location = `${apiUrl}/auth`;
+					window.location = `${apiUrl}/auth/login`;
 				}
 			}
 			if (response.status === 201) {
