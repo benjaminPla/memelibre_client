@@ -1,7 +1,7 @@
 import { env } from '$env/dynamic/public';
 import { error, redirect } from '@sveltejs/kit';
-import type { User } from '$lib/types/index';
 import type { LayoutServerLoad } from './$types';
+import type { User } from '$lib/types/index';
 
 export const load: LayoutServerLoad = async ({ cookies }) => {
 	const sessionToken: string | undefined = cookies.get('session_token');

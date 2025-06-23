@@ -2,8 +2,6 @@
 	import { env } from '$env/dynamic/public';
 	import { goto } from '$app/navigation';
 
-	export let data: PageData;
-
 	const apiUrl = env.PUBLIC_API_URL;
 	let files: FileList;
 	let uploading = false;
