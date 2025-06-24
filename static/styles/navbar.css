@@ -1,10 +1,18 @@
 .navbar {
 	align-items: center;
 	background-color: var(--yellow);
-	display: grid;
-	grid-template-columns: 1fr auto 1fr;
+	display: flex;
+	justify-content: center;
 	padding: var(--spacing-base);
 	width: 100vw;
+}
+
+.navbar-width {
+	align-items: center;
+	display: grid;
+	gap: var(--spacing-small);
+	grid-template-columns: 1fr auto 1fr;
+	width: 960px;
 }
 
 .navbar-items {
@@ -18,8 +26,12 @@
 	justify-content: right;
 }
 
-.logo {
+.logo-mobile {
 	max-height: 32px;
+}
+
+.logo-desktop {
+	max-height: 50px;
 }
 
 .details {

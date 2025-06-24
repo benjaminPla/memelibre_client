@@ -3,7 +3,8 @@
 	display: flex;
 	flex-wrap: wrap;
 	gap: var(--spacing-small);
-	max-width: 960px; 
+	justify-content: center;
+	max-width: 960px;
 }
 
 .save-container > * {

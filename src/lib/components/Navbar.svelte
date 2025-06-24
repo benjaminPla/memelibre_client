@@ -44,7 +44,7 @@
 
 {#if isMobile}
 	<nav class="navbar-mobile">
-		<img class="logo" src="/assets/logo_2.png" alt="Meme Libre logo" loading="lazy" />
+		<img class="logo logo-mobile" src="/assets/logo_2.png" alt="Meme Libre logo" loading="lazy" />
 		<details bind:this={detailsHamburger}>
 			<summary class="summary-mobile"><Hamburger /></summary>
 			<ul class="navbar-items-mobile">
@@ -75,32 +75,34 @@
 	</nav>
 {:else}
 	<nav class="navbar">
-		<img class="logo" src="/assets/logo_2.png" alt="Meme Libre logo" loading="lazy" />
-		<ul class="navbar-items">
-			<li><a href="/" data-sveltekit-preload-data="hover">Hogar</a></li>
-			<li><a href="/upload" data-sveltekit-preload-data="hover">Subir</a></li>
-			{#if isLoggedIn}
-				<li><a href="/save" data-sveltekit-preload-data="hover">Guardados</a></li>
-			{/if}
-		</ul>
-		<ul class="navbar-items user-actions-container">
-			{#if isLoggedIn}
-				<details bind:this={detailsUser} class="details">
-					<summary>{user.username}</summary>
-					<ul class="user-actions">
-						<li>
-							<a
-								class="user-actions-option"
-								href="/user/put"
-								on:click={() => (detailsUser.open = false)}>Cuenta</a
-							>
-						</li>
-						<li><a class="user-actions-option" href={`${apiUrl}/auth/logout`}>Logout</a></li>
-					</ul>
-				</details>
-			{:else}
-				<li><a href={`${apiUrl}/auth/login`}>Login</a></li>
-			{/if}
-		</ul>
+		<div class="navbar-width">
+			<img class="logo logo-desktop" src="/assets/logo_2.png" alt="Meme Libre logo" loading="lazy" />
+			<ul class="navbar-items">
+				<li><a href="/" data-sveltekit-preload-data="hover">Hogar</a></li>
+				<li><a href="/upload" data-sveltekit-preload-data="hover">Subir</a></li>
+				{#if isLoggedIn}
+					<li><a href="/save" data-sveltekit-preload-data="hover">Guardados</a></li>
+				{/if}
+			</ul>
+			<ul class="navbar-items user-actions-container">
+				{#if isLoggedIn}
+					<details bind:this={detailsUser} class="details">
+						<summary>{user.username}</summary>
+						<ul class="user-actions">
+							<li>
+								<a
+									class="user-actions-option"
+									href="/user/put"
+									on:click={() => (detailsUser.open = false)}>Cuenta</a
+								>
+							</li>
+							<li><a class="user-actions-option" href={`${apiUrl}/auth/logout`}>Logout</a></li>
+						</ul>
+					</details>
+				{:else}
+					<li><a href={`${apiUrl}/auth/login`}>Login</a></li>
+				{/if}
+			</ul>
+		</div>
 	</nav>
 {/if}
