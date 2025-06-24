@@ -45,6 +45,7 @@
 				<li><a href="/" data-sveltekit-preload-data="hover">Hogar</a></li>
 				<li><a href="/upload" data-sveltekit-preload-data="hover">Subir</a></li>
 				{#if isLoggedIn}
+					<li><a href="/save" data-sveltekit-preload-data="hover">Guardados</a></li>
 					<details class="details-user-mobile">
 						<summary>{user.username}</summary>
 						<ul class="user-actions-mobile">
@@ -70,6 +71,9 @@
 		<ul class="navbar-items">
 			<li><a href="/" data-sveltekit-preload-data="hover">Hogar</a></li>
 			<li><a href="/upload" data-sveltekit-preload-data="hover">Subir</a></li>
+			{#if isLoggedIn}
+				<li><a href="/save" data-sveltekit-preload-data="hover">Guardados</a></li>
+			{/if}
 		</ul>
 		<ul class="navbar-items user-actions-container">
 			{#if isLoggedIn}

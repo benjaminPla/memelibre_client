@@ -1,0 +1,8 @@
+.save-container {
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: var(--spacing-base);
+	justify-content: space-evenly;
+}

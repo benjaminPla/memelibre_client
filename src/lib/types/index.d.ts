@@ -1,7 +1,7 @@
 export type Meme = {
 	id: number;
 	imageUrl: string;
-	created_by?: string;
+	created_by: string;
 };
 
 export type User = {
