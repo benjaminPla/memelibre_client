@@ -1,8 +1,12 @@
 .save-container {
-	align-items: center;
+	align-items: start;
 	display: flex;
-	flex-direction: row;
 	flex-wrap: wrap;
-	gap: var(--spacing-base);
-	justify-content: space-evenly;
+	gap: var(--spacing-small);
+	max-width: 960px; 
+}
+
+.save-container > * {
+	flex: 1 1 200px;
+	max-width: 300px;
 }
