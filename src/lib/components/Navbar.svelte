@@ -12,22 +12,28 @@
 	let detailsHamburger: HTMLDetailsElement;
 	let detailsUser: HTMLDetailsElement;
 
+	function closeHamburger() {
+		detailsHamburger.open = false;
+	}
+
 	onMount(() => {
 		const handleResize = () => {
 			isMobile = window.innerWidth < 768;
 		};
 
-		const handleDetailsToggle = (event: MouseEvent) => {
+		function handleDetailsToggle(event: MouseEvent) {
 			if (detailsHamburger && !detailsHamburger.contains(event.target as Node)) {
 				detailsHamburger.open = false;
 			}
 			if (detailsUser && !isMobile && !detailsUser.contains(event.target as Node)) {
 				detailsUser.open = false;
 			}
-		};
+		}
 
-		window.addEventListener('resize', handleResize);
+		isMobile = window.innerWidth < 768;
+
 		document.addEventListener('click', handleDetailsToggle);
+		window.addEventListener('resize', handleResize);
 		return () => window.removeEventListener('resize', handleResize);
 	});
 </script>
@@ -38,23 +44,25 @@
 
 {#if isMobile}
 	<nav class="navbar-mobile">
-		<img class="logo" src="/assets/logo.png" alt="Meme Libre logo" loading="lazy" />
+		<img class="logo" src="/assets/logo_2.png" alt="Meme Libre logo" loading="lazy" />
 		<details bind:this={detailsHamburger}>
 			<summary class="summary-mobile"><Hamburger /></summary>
 			<ul class="navbar-items-mobile">
-				<li><a href="/" data-sveltekit-preload-data="hover">Hogar</a></li>
-				<li><a href="/upload" data-sveltekit-preload-data="hover">Subir</a></li>
+				<li><a href="/" data-sveltekit-preload-data="hover" on:click={closeHamburger}>Hogar</a></li>
+				<li>
+					<a href="/upload" data-sveltekit-preload-data="hover" on:click={closeHamburger}>Subir</a>
+				</li>
 				{#if isLoggedIn}
-					<li><a href="/save" data-sveltekit-preload-data="hover">Guardados</a></li>
+					<li>
+						<a href="/save" data-sveltekit-preload-data="hover" on:click={closeHamburger}
+							>Guardados</a
+						>
+					</li>
 					<details class="details-user-mobile">
 						<summary>{user.username}</summary>
 						<ul class="user-actions-mobile">
 							<li>
-								<a
-									class="user-actions-option"
-									href="/user/put"
-									on:click={() => (detailsHamburger.open = false)}>Cuenta</a
-								>
+								<a class="user-actions-option" href="/user/put" on:click={closeHamburger}>Cuenta</a>
 							</li>
 							<li><a class="user-actions-option" href={`${apiUrl}/auth/logout`}>Logout</a></li>
 						</ul>
@@ -67,7 +75,7 @@
 	</nav>
 {:else}
 	<nav class="navbar">
-		<img class="logo" src="/assets/logo.png" alt="Meme Libre logo" loading="lazy" />
+		<img class="logo" src="/assets/logo_2.png" alt="Meme Libre logo" loading="lazy" />
 		<ul class="navbar-items">
 			<li><a href="/" data-sveltekit-preload-data="hover">Hogar</a></li>
 			<li><a href="/upload" data-sveltekit-preload-data="hover">Subir</a></li>
