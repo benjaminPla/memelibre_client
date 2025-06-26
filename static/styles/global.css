@@ -27,6 +27,7 @@
 	/* Text Colors */
 	--text-primary: var(--black);
 	--text-secondary: var(--dark-gray);
+	--text-tertiary: #555555;
 	--text-accent: var(--blue);
 
 	/* Buttons */
@@ -52,7 +53,7 @@
 html {
 	color: var(--text-primary);
 	font-family: var(--font-primary);
-	font-size: clamp(var(--font-normal-size), 2vw, var(--font-big-size));
+	font-size: clamp(var(--font-normal-size), var(--font-big-size), var(--font-big-size));
 	background-color: var(--primary-bg);
 }
 
@@ -85,7 +86,8 @@ label {
 	color: var(--text-primary);
 }
 
-button {
+button,
+.button {
 	align-items: center;
 	background-color: var(--blue);
 	border: none;
@@ -94,13 +96,16 @@ button {
 	cursor: pointer;
 	display: flex;
 	font-family: var(--font-primary);
+	font-size: 15px;
 	font-weight: var(--font-bold);
 	gap: var(--spacing-small);
 	justify-content: center;
 	padding: var(--spacing-small);
 	width: 100%;
 }
-button:hover {
+button:hover,
+.button:hover {
+	color: var(--white);
 	background-color: var(--dark-blue);
 }
 
@@ -113,6 +118,14 @@ form {
 	display: flex;
 	flex-direction: column;
 	gap: var(--spacing-small);
+}
+
+input {
+	padding: var(--spacing-small);
+}
+
+.clickable {
+	cursor: pointer;
 }
 
 /* $bg-default: #f5f5f5; */

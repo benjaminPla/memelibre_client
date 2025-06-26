@@ -12,6 +12,7 @@
 </script>
 
 <svelte:head>
+	<link rel="stylesheet" href="/styles/multiple_meme.css" />
 	<link rel="stylesheet" href="/styles/save.css" />
 </svelte:head>
 

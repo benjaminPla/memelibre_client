@@ -1,6 +1,6 @@
 import { env } from '$env/dynamic/public';
 import { error } from '@sveltejs/kit';
-import type { Meme } from '$lib/types';
+import type { MemeWithUsernameAndCommentsCount } from '$lib/types';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ fetch }) => {
@@ -14,7 +14,7 @@ export const load: PageServerLoad = async ({ fetch }) => {
 			error(res.status, errorMsg);
 		}
 
-		const memes: Meme[] = await res.json();
+		const memes: MemeWithUsernameAndCommentsCount[] = await res.json();
 
 		return { memes };
 	} catch (e: any) {

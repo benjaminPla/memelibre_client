@@ -13,13 +13,13 @@
 	max-width: 100%;
 }
 
-.username {
-	font-size: var(--font-small-size);
-    color: var(--text-secondary)
-}
-
 .actions-container {
 	display: flex;
 	gap: var(--spacing-small);
 	width: 100%;
+}
+
+.username {
+	font-size: var(--font-small-size);
+	color: var(--text-secondary);
 }

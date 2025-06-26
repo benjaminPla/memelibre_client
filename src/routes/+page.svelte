@@ -64,6 +64,10 @@
 	});
 </script>
 
+<svelte:head>
+	<link rel="stylesheet" href="/styles/multiple_meme.css" />
+</svelte:head>
+
 {#each memes as meme (meme.id)}
 	<Meme {meme} />
 {/each}

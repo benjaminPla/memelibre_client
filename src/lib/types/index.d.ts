@@ -1,7 +1,24 @@
-export type Meme = {
+export type Comment = {
+	content: string;
+	id: number;
+	meme_id: number;
+	username: sting;
+};
+
+export type MemeWithUsernameAndCommentsCount = {
+	comment_count: number;
 	id: number;
 	imageUrl: string;
-	created_by: string;
+	like_count: number;
+	username: string;
+};
+
+export type MemeWithUsernameAndComments = {
+	comments: String[];
+	id: number;
+	image_url: string;
+	like_count: number;
+	username: string;
 };
 
 export type User = {
