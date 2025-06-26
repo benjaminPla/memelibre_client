@@ -19,6 +19,11 @@
 
 	async function handleComment() {
 		if (isCommenting) return;
+		if (content.trim().length === 0) {
+			window.showNotification('error', 'Comentario vacío como el currículum de Grabois.');
+			return;
+		}
+
 		isCommenting = true;
 
 		try {
@@ -31,10 +36,13 @@
 			if (!response.ok) {
 				if (response.status === 401) {
 					window.location = `${apiUrl}/auth/login`;
+				} else {
+					window.showNotification('error', 'Qué pasó ahora, la puta madre');
 				}
 			}
 			if (response.status === 201) {
 				window.showNotification('success', 'El mercado lo aprobó. Guardado');
+				window.location.reload();
 			}
 		} catch {
 			window.showNotification('error', 'Qué pasó ahora, la puta madre');
@@ -127,8 +135,10 @@
 		<button on:click={handleShare}><Share /></button>
 	</div>
 	<p class="username">{meme.username}</p>
-	<input class="input" bind:value={content} placeholder="Tu comentario" />
-	<button on:click={handleComment}>{isCommenting ? 'COMENTANDO...' : 'COMENTAR'}</button>
+	<input class="input" bind:value={content} maxlength="128" placeholder="Tu comentario" />
+	<button class="comment-btn" on:click={handleComment}
+		>{isCommenting ? 'COMENTANDO...' : 'COMENTAR'}</button
+	>
 	<div class="comments-container">
 		{#each meme.comments as comment (comment.id)}
 			<div class="comment-container">

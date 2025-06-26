@@ -49,3 +49,11 @@ Purga completada
 Subsidio cancelado
 Intervención estatal removida
 Desapareció como ministerio de cultura
+
+-- ?
+"Comentario vacío detectado. Esto parece una sesión del Congreso."
+"Eso está tan vacío como las reservas del Banco Central."
+"No se aceptan frases keynesianas: mucho espacio, cero contenido."
+"Esto no es una licitación estatal, necesitamos que pongas algo."
+"Vacío como el currículum de Grabois."
+"Pusiste menos que el Estado en educación."

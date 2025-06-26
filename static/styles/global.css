@@ -121,6 +121,7 @@ form {
 }
 
 input {
+	border-radius: var(--border-radius-small);
 	padding: var(--spacing-small);
 }
 

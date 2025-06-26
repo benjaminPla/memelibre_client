@@ -28,17 +28,25 @@
 	width: 100%;
 }
 
+.comment-btn {
+	background-color: var(--light-blue);
+	color: var(--blue);
+}
+
 .comments-container {
 	display: flex;
 	flex-direction: column;
 	font-size: var(--font-small-size);
-	gap: var(--spacing-small);
 	width: 100%;
 }
 
+.comments-container > *:nth-child(odd) {
+	background-color: var(--light-gray);
+}
+
 .comment-container {
-	border-top: 1px solid var(--light-gray);
 	padding: var(--spacing-small) 0;
+	width: 100%;
 }
 
 .content {
